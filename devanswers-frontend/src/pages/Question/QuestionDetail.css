@@ -1,0 +1,11 @@
+.qd-container {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  padding: 1.5rem 0.5rem;
+}
+
+.qd-loading-container {
+  background-color: var(--bg-primary);
+  min-height: 60vh;
+  padding: 2rem;
+}

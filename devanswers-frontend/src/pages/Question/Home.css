@@ -1,0 +1,64 @@
+.home-container {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+}
+
+.home-title {
+  font-weight: 700;
+  color: var(--text-color);
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
+}
+
+.home-subtitle {
+  font-size: clamp(0.8rem, 2vw, 0.875rem);
+  color: var(--text-muted);
+}
+
+.home-ask-btn {
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(10, 149, 255, 0.2);
+  white-space: nowrap;
+}
+
+.home-loading-container {
+  min-height: 60vh;
+  background-color: var(--bg-primary);
+}
+
+.home-loading-spinner {
+  width: 3rem;
+  height: 3rem;
+}
+
+.home-error-container {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+}
+
+.home-page-container {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+}
+
+.home-title {
+  font-weight: 700;
+  color: var(--text-color);
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
+}
+
+.home-tag-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.home-tag-clear-icon {
+  cursor: pointer;
+  font-size: 0.75rem;
+}

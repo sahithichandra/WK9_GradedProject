@@ -1,0 +1,100 @@
+/* ── Tags Page ─────────────────────────────────────────── */
+.tags-page-container {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+}
+
+.tags-header-card {
+  border: none !important;
+  border-bottom: 3px solid var(--border-color);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tags-icon {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-right: 1rem;
+}
+
+.tags-title {
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.tags-desc {
+  color: var(--text-muted);
+}
+
+.tags-search-prepend {
+  border: 2px solid var(--border-color);
+}
+
+.tags-search-input {
+  border: 2px solid var(--border-color);
+  border-left: none;
+}
+
+.tags-count {
+  color: var(--text-muted);
+}
+
+/* Tag card */
+.tag-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.tag-card {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  cursor: pointer;
+}
+
+.tag-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+.tag-card-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+}
+
+.tag-card-meta {
+  font-size: 0.9rem;
+}
+
+.tag-card-question-count {
+  color: var(--text-color);
+}
+
+.tag-card-cta {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Empty state */
+.tags-empty-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tags-empty-icon {
+  font-size: 3rem;
+  color: var(--border-color);
+  margin-bottom: 1rem;
+}
+
+.tags-loading-container {
+  min-height: 60vh;
+  background-color: var(--bg-primary);
+}

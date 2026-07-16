@@ -1,0 +1,120 @@
+/* Network error state */
+.sidebar-error {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.sidebar-error-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-error-title {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* Sticky wrapper */
+.sidebar-sticky {
+  position: sticky;
+  top: 70px;
+}
+
+/* Shared card overrides */
+.sidebar-card {
+  border: 1px solid var(--border-color) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--card-shadow) !important;
+  background-color: var(--card-bg) !important;
+}
+
+/* Section heading */
+.sidebar-section-title {
+  font-weight: 700;
+  color: var(--text-color);
+  font-size: 0.85rem;
+}
+
+/* Hot Tags icon */
+.sidebar-hot-tags-icon {
+  color: #f48225;
+  font-size: 1rem;
+}
+
+/* Tag row */
+.sidebar-tag-row {
+  border-radius: 6px;
+  background-color: var(--bg-secondary);
+  transition: background-color 0.2s, transform 0.2s;
+  cursor: pointer;
+  padding: 0.4rem 0.5rem;
+  text-decoration: none;
+}
+
+.sidebar-tag-row:hover {
+  background-color: var(--bg-tertiary);
+  transform: translateX(2px);
+}
+
+/* Tag badge */
+.sidebar-tag-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  border-radius: 4px !important;
+}
+
+.sidebar-tag-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Recent Questions icon */
+.sidebar-recent-icon {
+  color: #0a95ff;
+  font-size: 0.9rem;
+}
+
+/* Question row */
+.sidebar-question-row {
+  border-radius: 6px;
+  background-color: var(--bg-secondary);
+  transition: background-color 0.2s, transform 0.2s;
+  cursor: pointer;
+  border-left: 3px solid var(--primary-color);
+  padding: 0.4rem 0.5rem;
+  text-decoration: none;
+}
+
+.sidebar-question-row:hover {
+  background-color: var(--bg-tertiary);
+  transform: translateX(2px);
+}
+
+.sidebar-question-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-color);
+  line-height: 1.3;
+  margin-bottom: 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  /* -webkit-line-clamp: 2; */
+  -webkit-box-orient: vertical;
+}
+
+.sidebar-question-time {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.sidebar-question-votes {
+  font-size: 0.7rem;
+  color: #5eba7d;
+  font-weight: 600;
+}

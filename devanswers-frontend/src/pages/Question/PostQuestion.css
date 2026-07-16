@@ -1,0 +1,50 @@
+.pq-page-container {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+}
+
+.pq-header-card {
+  border: none !important;
+  border-bottom: 3px solid var(--border-color);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.pq-title {
+  font-weight: 700;
+  color: var(--text-color);
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+}
+
+.pq-body-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.pq-label {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.pq-input {
+  padding: 0.875rem;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.pq-textarea {
+  padding: 0.875rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.pq-btn {
+  padding: 0.875rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}

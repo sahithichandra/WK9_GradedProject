@@ -1,0 +1,48 @@
+.sidebar-left {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  z-index: 100;
+  background-color: var(--sidebar-bg);
+}
+
+.sidebar-right {
+  position: fixed;
+  top: 60px;
+  right: 1%;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  z-index: 100;
+  background-color: var(--bg-primary);
+  padding: 0.75rem;
+  width: 17%;
+}
+
+/* Desktop (lg+): account for both sidebars */
+.sidebar-main-content {
+  margin-left: 16.666667%;
+  margin-right: 16.5%;
+  width: 66.833333%;
+}
+
+/* Tablet (md–lg): left sidebar is md={3} = 25% */
+@media (max-width: 991px) {
+  .sidebar-main-content {
+    margin-left: 25%;
+    margin-right: 0;
+    width: 75%;
+    padding: 0 1rem;
+  }
+}
+
+/* Mobile: full width */
+@media (max-width: 767px) {
+  .sidebar-main-content {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    padding: 0;
+  }
+}

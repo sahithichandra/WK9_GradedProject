@@ -1,0 +1,71 @@
+.qcontent-header-card {
+  border: none !important;
+  border-bottom: 3px solid var(--border-color);
+  border-radius: 12px 12px 0 0;
+  box-shadow: var(--card-shadow);
+}
+
+.qcontent-title {
+  font-weight: 700;
+  color: var(--text-color);
+  font-size: clamp(1.25rem, 5vw, 1.75rem);
+}
+
+.qcontent-meta {
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  color: var(--text-muted);
+}
+
+.qcontent-body-card {
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+.qcontent-vote-btn {
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.qcontent-vote-count {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0.5rem 0;
+}
+
+.qcontent-description {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-color);
+}
+
+.qcontent-tag-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.qcontent-author-row {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.qcontent-author-name {
+  color: var(--primary-color);
+}
+
+.qcontent-icon-up {
+  color: #5eba7d;
+}
+
+.qcontent-icon-down {
+  color: #dc3545;
+}
+
+.qcontent-icon-sm {
+  font-size: 0.85rem;
+}
