@@ -17,20 +17,27 @@ const app = express();
 // Security middlewares
 app.use(helmet());
 
+// CORS must run before any middleware that can reject a request, otherwise
+// those responses (e.g. the limiter's 429) reach the browser without
+// Access-Control-Allow-Origin and surface as an opaque "Network Error".
+app.use(cors());
+
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 100, // limit each IP to 100 requests per windowMs
-    standardHeaders: 'draft-8', // RFC 6585 combined RateLimit header (v8.x API)
-    legacyHeaders: false,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100, // limit each IP to 100 requests per windowMs
+  standardHeaders: 'draft-8', // RFC 6585 combined RateLimit header (v8.x API)
+  legacyHeaders: false,
+  // Abuse protection only matters in production. Locally the browser, the test
+  // suite and any tooling all share one IP and would exhaust the quota.
+  skip: () => process.env.NODE_ENV !== 'production',
 });
 app.use(limiter);
 
 // Middlewares
-app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ 
-    limit: '10mb', 
-    extended: true 
+  limit: '10mb', 
+  extended: true 
 }));
 
 // Use router

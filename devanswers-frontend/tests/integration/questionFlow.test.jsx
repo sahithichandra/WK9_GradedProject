@@ -6,7 +6,6 @@ import questionReducer, {
   postQuestion,
   voteQuestion,
 } from '../../src/reducers/questionSlice';
-import userReducer from '../../src/reducers/userSlice';
 
 /**
  * Integration Tests: Question Flow with Redux + MSW

@@ -7,6 +7,7 @@ import { fetchQuestionById } from '../../reducers/questionSlice.js';
 import QuestionContent from '../../components/Question/QuestionContent.jsx';
 import AnswerList from '../../components/Answer/AnswerList.jsx';
 import AnswerForm from '../../components/Answer/AnswerForm.jsx';
+import AnswerSummary from '../../components/Answer/AnswerSummary.jsx';
 import './QuestionDetail.css';
 
 const QuestionDetail = () => {
@@ -51,6 +52,11 @@ const QuestionDetail = () => {
             question={currentQuestion}
           />
           
+          <AnswerSummary
+            questionId={id}
+            answers={currentQuestion.answers}
+          />
+
           <AnswerList
             answers={currentQuestion.answers}
           />

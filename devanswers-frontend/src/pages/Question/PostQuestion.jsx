@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { FaPaperPlane } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { FaPaperPlane, FaMagic } from 'react-icons/fa';
 
 import { postQuestion } from '../../reducers/questionSlice.js';
+import { improveQuestion } from '../../services/aiService.js';
+import AiSuggestion from '../../components/Shared/AiSuggestion.jsx';
 
-import { Col, Container, Form, Button, Card, Row } from 'react-bootstrap';
+import { Col, Container, Form, Button, Card, Row, Spinner, Alert } from 'react-bootstrap';
 import './PostQuestion.css';
 
 const PostQuestion = () => {
@@ -13,8 +15,53 @@ const PostQuestion = () => {
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState('');
 
+  // AI suggestions are ephemeral form state: each field holds a pending
+  // suggestion until the user accepts or rejects it.
+  const [suggestions, setSuggestions] = useState({});
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState(null);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.user);
+
+  const dismissSuggestion = (field) =>
+    setSuggestions((current) => {
+      const { [field]: _removed, ...rest } = current;
+      return rest;
+    });
+
+  const handleImproveWithAi = async () => {
+    // The backend enforces this too; this keeps the message useful for the user.
+    if (!userInfo) {
+      setAiError('You must be logged in to use AI suggestions.');
+      return;
+    }
+
+    if (!title.trim() && !description.trim()) {
+      setAiError('Add a title or description before asking for improvements.');
+      return;
+    }
+
+    setAiLoading(true);
+    setAiError(null);
+
+    try {
+      const improved = await improveQuestion(
+        { title, description, tags },
+        userInfo?.token,
+      );
+      setSuggestions(improved);
+    } catch (error) {
+      setAiError(
+        error.response?.data?.message ||
+          error.message ||
+          'Could not generate improvements. Please try again.',
+      );
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,6 +110,18 @@ const PostQuestion = () => {
                       required
                       className="pq-input"
                     />
+                    {suggestions.title && (
+                      <AiSuggestion
+                        label="Suggested title"
+                        onAccept={() => {
+                          setTitle(suggestions.title);
+                          dismissSuggestion('title');
+                        }}
+                        onReject={() => dismissSuggestion('title')}
+                      >
+                        {suggestions.title}
+                      </AiSuggestion>
+                    )}
                   </Form.Group>
 
                   <Form.Group className="mb-4">
@@ -80,6 +139,18 @@ const PostQuestion = () => {
                       required
                       className="pq-textarea"
                     />
+                    {suggestions.description && (
+                      <AiSuggestion
+                        label="Suggested description"
+                        onAccept={() => {
+                          setDescription(suggestions.description);
+                          dismissSuggestion('description');
+                        }}
+                        onReject={() => dismissSuggestion('description')}
+                      >
+                        {suggestions.description}
+                      </AiSuggestion>
+                    )}
                   </Form.Group>
 
                   <Form.Group className="mb-4">
@@ -98,12 +169,62 @@ const PostQuestion = () => {
                     <Form.Text className="text-muted">
                       Add up to 5 tags to describe what your question is about
                     </Form.Text>
+                    {suggestions.tags?.length > 0 && (
+                      <AiSuggestion
+                        label="Suggested tags"
+                        onAccept={() => {
+                          setTags(suggestions.tags.join(', '));
+                          dismissSuggestion('tags');
+                        }}
+                        onReject={() => dismissSuggestion('tags')}
+                      >
+                        <div className="ai-suggestion-tags">
+                          {suggestions.tags.map((tag) => (
+                            <span key={tag} className="ai-suggestion-tag">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </AiSuggestion>
+                    )}
                   </Form.Group>
 
-                  <Button 
-                    type="submit" 
-                    variant="primary" 
-                    size="lg" 
+                  {aiError && (
+                    <Alert
+                      variant="danger"
+                      dismissible
+                      onClose={() => setAiError(null)}
+                      className="mb-4"
+                    >
+                      {aiError}
+                    </Alert>
+                  )}
+
+                  <Button
+                    type="button"
+                    variant="outline-primary"
+                    size="lg"
+                    className="w-100 mb-3 ai-improve-btn"
+                    onClick={handleImproveWithAi}
+                    disabled={aiLoading}
+                  >
+                    {aiLoading ? (
+                      <>
+                        <Spinner animation="border" size="sm" className="me-2" />
+                        Improving your question...
+                      </>
+                    ) : (
+                      <>
+                        <FaMagic className="me-2" />
+                        Improve with AI
+                      </>
+                    )}
+                  </Button>
+
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="lg"
                     className="w-100 pq-btn"
                   >
                     <FaPaperPlane className="me-2" />

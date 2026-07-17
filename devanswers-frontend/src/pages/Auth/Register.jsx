@@ -44,7 +44,7 @@ const Register = () => {
     if (isAuthenticated) {
       navigate("/");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="auth-page">

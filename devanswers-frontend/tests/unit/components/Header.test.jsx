@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import Header from '../../../src/components/Header/Header';
-import themeReducer from '../../../src/reducers/themeSlice';
 
 const mockNavigate = vi.fn();
 

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import * as tagService from '../../src/services/tagService';
 
 describe('Tag Flow Integration Tests (tagService + MSW)', () => {

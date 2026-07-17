@@ -50,7 +50,7 @@ describe('themeSlice', () => {
       const state1 = themeReducer({ isDarkMode: false }, toggleTheme());
       expect(localStorage.getItem('darkMode')).toBe('true');
 
-      const state2 = themeReducer(state1, toggleTheme());
+      themeReducer(state1, toggleTheme());
       expect(localStorage.getItem('darkMode')).toBe('false');
     });
   });

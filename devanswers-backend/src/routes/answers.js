@@ -1,5 +1,7 @@
 import express from "express";
 import {
+  getAnswersByQuestionId,
+  createAnswer,
   updateAnswer,
   deleteAnswer,
   upvoteAnswer,
@@ -9,7 +11,11 @@ import authenticate from "../middleware/authHandler.js";
 
 const router = express.Router();
 
+// Public routes - no authentication required
+router.get("/question/:questionId", getAnswersByQuestionId);
+
 // Protected routes - authentication required
+router.post("/question/:questionId", authenticate, createAnswer);
 router.put("/:answerId", authenticate, updateAnswer);
 router.delete("/:answerId", authenticate, deleteAnswer);
 router.post("/:answerId/upvote", authenticate, upvoteAnswer);

@@ -9,6 +9,24 @@ import {
 
 const BASE_URL = 'http://localhost:3000/api';
 
+// Creating an answer is exposed at two paths (the flat /answers/question/:id
+// alias and the nested route the app calls), so both share one resolver.
+const createAnswerResolver = async ({ request }) => {
+  const body = await request.json();
+
+  const newAnswer = {
+    _id: `answer-${Date.now()}`,
+    answerText: body.answerText,
+    author: { _id: body.author, name: mockUsers.user1.name },
+    voteCount: 0,
+    upvotes: [],
+    downvotes: [],
+    createdAt: new Date().toISOString(),
+  };
+
+  return HttpResponse.json({ data: newAnswer }, { status: 201 });
+};
+
 export const handlers = [
   // ── Auth endpoints ────────────────────────────────────────────────────────
   http.post(`${BASE_URL}/auth/login`, async ({ request }) => {
@@ -98,21 +116,8 @@ export const handlers = [
   }),
 
   // ── Answer endpoints ──────────────────────────────────────────────────────
-  http.post(`${BASE_URL}/answers/question/:questionId`, async ({ request, params }) => {
-    const body = await request.json();
-
-    const newAnswer = {
-      _id: `answer-${Date.now()}`,
-      answerText: body.answerText,
-      author: { _id: body.author, name: mockUsers.user1.name },
-      voteCount: 0,
-      upvotes: [],
-      downvotes: [],
-      createdAt: new Date().toISOString(),
-    };
-
-    return HttpResponse.json({ data: newAnswer }, { status: 201 });
-  }),
+  http.post(`${BASE_URL}/answers/question/:questionId`, createAnswerResolver),
+  http.post(`${BASE_URL}/questions/:questionId/answers`, createAnswerResolver),
 
   http.post(`${BASE_URL}/answers/:id/upvote`, ({ params }) => {
     const answer = mockAnswers.find((a) => a._id === params.id);
@@ -151,7 +156,7 @@ export const handlers = [
   }),
 
   // ── User stats endpoint ───────────────────────────────────────────────────
-  http.get(`${BASE_URL}/auth/stats/:userId`, ({ params }) => {
+  http.get(`${BASE_URL}/auth/stats/:userId`, () => {
     return HttpResponse.json({
       success: true,
       data: {

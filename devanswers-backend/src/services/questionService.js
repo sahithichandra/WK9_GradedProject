@@ -26,17 +26,22 @@ export const getAllQuestionsService = async () => {
 };
 
 export const getQuestionByIdService = async (id) => {
-  // Increment views and fetch populated question in one query
-  let question = await Question.findByIdAndUpdate(
-    id,
-    { $inc: { views: 1 } },
-    { new: true }, // return updated document
-  )
-    .populate({ path: "author", select: "name" })
-    .populate("tags");
+  const question = await Question.findById(id);
 
   if (!question) {
     throw createAppError("Question not found", 404);
+  }
+
+  // Record the view before re-reading the question with its relations populated.
+  question.views += 1;
+  await question.save();
+
+  let populatedQuestion = await Question.findById(id)
+    .populate({ path: "author", select: "name" })
+    .populate("tags");
+
+  if (!populatedQuestion) {
+    throw createAppError("Question not found after view increment", 404);
   }
 
   // Fetch answers for the question.
@@ -45,10 +50,10 @@ export const getQuestionByIdService = async (id) => {
     select: "name",
   });
 
-  question = question.toObject(); // convert Mongoose document to plain object
-  question.answers = answers;
+  populatedQuestion = populatedQuestion.toObject(); // convert Mongoose document to plain object
+  populatedQuestion.answers = answers;
 
-  return question;
+  return populatedQuestion;
 };
 
 export const createQuestionService = async ({

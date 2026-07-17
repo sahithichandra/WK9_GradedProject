@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { FaUser, FaEnvelope, FaSave, FaEdit } from 'react-icons/fa';
@@ -32,15 +32,7 @@ const Profile = () => {
     website: '',    
   });
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    } else if (userInfo?.userId) {
-      fetchUserStats();
-    }
-  }, [isAuthenticated, navigate, userInfo]);
-
-  const fetchUserStats = async () => {
+  const fetchUserStats = useCallback(async () => {
     try {
       const response = await axios.get(USER_API.STATS(userInfo.userId));
       if (response.data.success) {
@@ -49,7 +41,15 @@ const Profile = () => {
     } catch (err) {
       console.error('Error fetching user stats:', err);
     }
-  };
+  }, [userInfo]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    } else if (userInfo?.userId) {
+      fetchUserStats();
+    }
+  }, [isAuthenticated, navigate, userInfo, fetchUserStats]);
 
   const handleChange = (e) => {
     setFormData({
@@ -74,7 +74,7 @@ const Profile = () => {
         setIsEditing(false);
         setLoading(false);
       }, 1000);
-    } catch (err) {
+    } catch {
       setError('Failed to update profile. Please try again.');
       setLoading(false);
     }

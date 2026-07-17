@@ -1,0 +1,28 @@
+.asum-wrapper {
+  margin-bottom: 1rem;
+}
+
+.asum-btn {
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+.asum-banner {
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+  margin-bottom: 0;
+}
+
+.asum-banner-heading {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+.asum-banner-text {
+  margin-bottom: 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
