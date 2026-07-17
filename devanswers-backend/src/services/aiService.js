@@ -4,7 +4,10 @@ import Question from "../models/Question.js";
 import Answer from "../models/Answer.js";
 import { createAppError } from "../utils/createAppError.js";
 
-const GEMINI_MODEL = "gemini-3.5-flash";
+// Override with GEMINI_MODEL in .env. The default is a generally-available
+// model that honours response_format JSON schemas and has free-tier headroom;
+// larger models such as gemini-3.5-flash allow only ~20 free requests.
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3.1-flash-lite";
 
 // A question needs at least this many answers before a summary is worth generating.
 export const MIN_ANSWERS_FOR_SUMMARY = 3;
@@ -22,13 +25,30 @@ const getClient = () => {
 
 // Wraps every Gemini call so upstream failures surface as 502s rather than generic 500s.
 const callGemini = async (params) => {
+  // Resolved outside the try so a configuration error (missing key) is not
+  // mislabelled as an upstream failure.
+  const ai = getClient();
+
   let interaction;
   try {
-    interaction = await getClient().interactions.create({
+    interaction = await ai.interactions.create({
       model: GEMINI_MODEL,
       ...params,
     });
   } catch (error) {
+    // Surface quota/rate-limit errors as a 429 with a short, actionable message
+    // rather than leaking the provider's full billing blurb into the UI.
+    const status = error.status ?? Number(/^(\d{3})/.exec(error.message)?.[1]);
+    if (status === 429) {
+      const retrySeconds = /retry in ([\d.]+)s/.exec(error.message)?.[1];
+      throw createAppError(
+        retrySeconds
+          ? `The AI service is busy right now. Please try again in about ${Math.ceil(Number(retrySeconds))} seconds.`
+          : "The AI service is busy right now. Please try again in a moment.",
+        429,
+      );
+    }
+
     throw createAppError(`AI request failed: ${error.message}`, 502);
   }
 
